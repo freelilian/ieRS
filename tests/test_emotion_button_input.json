@@ -1,0 +1,37 @@
+{
+  "user_id": "Testing",
+  "input": [
+    {    
+      "emotion": "anticipation",
+      "weight": "high" 
+    },
+    {
+      "emotion": "joy",
+      "weight": "low"
+    },
+    {
+      "emotion": "trust",
+      "weight": "low"
+    },
+    {
+      "emotion": "anger",
+      "weight": "low"
+    },
+    {
+      "emotion": "fear",
+      "weight": "ignore"
+    },
+    {
+      "emotion": "disgust",
+      "weight": "low"
+    },
+    {
+      "emotion": "sadness",
+      "weight": "ignore"
+    },
+    {
+      "emotion": "surprise",
+      "weight": "high"
+    }
+  ]
+}

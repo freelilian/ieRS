@@ -1,0 +1,85 @@
+{
+  "user_id": "Bart",
+  "ratings": [
+    {    
+      "movielensId": "70286",      
+      "rating": 4    
+    },
+    {
+      "movielensId": "122916",
+      "rating": 4
+    },
+    {
+      "movielensId": "71264",
+      "rating": 4
+    },
+    {
+      "movielensId": "2161",
+      "rating": 4
+    },
+    {
+      "movielensId": "6155",
+      "rating": 2
+    },
+    {
+      "movielensId": "103141",
+      "rating": 3
+    },
+    {
+      "movielensId": "6586",
+      "rating": 1
+    },
+    {
+      "movielensId": "778",
+      "rating": 5
+    },
+    {
+      "movielensId": "59615",
+      "rating": 4
+    },
+    {
+      "movielensId": "8529",
+      "rating": 4
+    },
+    {
+      "movielensId": "2640",
+      "rating": 3
+    },
+    {
+      "movielensId": "2915",
+      "rating": 3
+    },
+    {
+      "movielensId": "34",
+      "rating": 4
+    },
+    {
+      "movielensId": "4370",
+      "rating": 2
+    },
+    {
+      "movielensId": "6874",
+      "rating": 5
+    },
+    {
+      "movielensId": "4084",
+      "rating": 4
+    },
+    {
+      "movielensId": "4369",
+      "rating": 3
+    },
+    {
+      "movielensId": "171763",
+      "rating": 3
+    },
+    {
+      "movielensId": "3033",
+      "rating": 5
+    },
+    {
+      "movielensId": "122882",
+      "rating": 5
+    }
+  ]
+}
