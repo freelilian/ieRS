@@ -4,22 +4,22 @@
     {    
       "emotion": "anticipation",
       "switch": "specified",
-      "weight": 0.75    
+      "weight": 0.19    
     },
     {
       "emotion": "joy",
       "switch": "specified",
-      "weight": 0.18
+      "weight": 0.28
     },
     {
       "emotion": "trust",
       "switch": "specified",
-      "weight": 0.46
+      "weight": 0.24
     },
     {
       "emotion": "anger",
       "switch": "specified",
-      "weight": 0
+      "weight": 0.016
     },
     {
       "emotion": "fear",
@@ -29,7 +29,7 @@
     {
       "emotion": "disgust",
       "switch": "specified",
-      "weight": 0
+      "weight": 0.08
     },
     {
       "emotion": "sadness",
