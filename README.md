@@ -1,7 +1,5 @@
 # ieRS_API
 
-##Algorithms
-
 ## Overview
 
 This directory contains code for running the recommender algorithms server. This server has been
