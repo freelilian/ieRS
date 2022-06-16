@@ -47,9 +47,9 @@ def sqrt_cityblock(point1, point2):
 def emotion_distance(matrix, vector):
     dist_array = []
     for row_vector in matrix:
-        # dist = distance.cityblock(row_vector, vector)
+        dist = distance.cityblock(row_vector, vector)
         # dist = sqrt_cityblock(row_vector, vector)
-        dist = distance.euclidean(row_vector, vector)
+        # dist = distance.euclidean(row_vector, vector)
         dist_array.append(dist)
     
     return  dist_array 
@@ -209,9 +209,14 @@ def predict_tuned_diverseN_by_emotion(ratings: List[Rating], user_id, emotion_in
         # 8 * 1
     # print(emotion_tags)
     
-    
     user_emotion_vals = dict(zip(emotion_tags, user_emotion_vals))
     #print(user_emotion_dict)
+    
+    ##  the max and min of emo_i in the dataset(9064 movies):
+    emotions_max_dict = {'anger':0.183, 'anticipation':0.252, 'disgust':0.158, 'fear':0.210, 'joy':0.319, 'sadness':0.189, 'surprise':0.167, 'trust':0.254}
+    emotions_min_dict = {'anger':0.016, 'anticipation':0.064, 'disgust':0.008, 'fear':0.027, 'joy':0.038, 'sadness':0.064, 'surprise':0.016, 'trust':0.064}
+    # print(emotions_max_dict)
+    # print(emotions_min_dict)
     
     user_specified_emotion_tags = []
     user_unspecified_emotion_tags = []
@@ -220,10 +225,12 @@ def predict_tuned_diverseN_by_emotion(ratings: List[Rating], user_id, emotion_in
     for k, v in user_emotion_vals.items():
         if v == "low":
             user_specified_emotion_tags.append(k)
-            user_specified_emotion_vals.append(0.3)
+            emo_val = emotions_min_dict[k] + 0.3*(emotions_max_dict[k] - emotions_min_dict[k])
+            user_specified_emotion_vals.append(emo_val)
         elif v == "high":
             user_specified_emotion_tags.append(k)
-            user_specified_emotion_vals.append(0.8)
+            emo_val = emotions_min_dict[k] + 0.8*(emotions_max_dict[k] - emotions_min_dict[k])
+            user_specified_emotion_vals.append(emo_val)
         else: 
             user_unspecified_emotion_tags.append(k)
             # user_unspecified_emotion_vals.append(k)     

@@ -47,9 +47,9 @@ def sqrt_cityblock(point1, point2):
 def emotion_distance(matrix, vector):
     dist_array = []
     for row_vector in matrix:
-        # dist = distance.cityblock(row_vector, vector)
+        dist = distance.cityblock(row_vector, vector)
         # dist = sqrt_cityblock(row_vector, vector)
-        dist = distance.euclidean(row_vector, vector)
+        # dist = distance.euclidean(row_vector, vector)
         dist_array.append(dist)
     
     return  dist_array 

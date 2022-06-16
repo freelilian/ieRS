@@ -54,8 +54,8 @@ class EmotionInput:
 @dataclass
 class EmoSliderInput:
     """
-    User's input weight for the 8 dmotions. `weight` should be a percetenge decimal
-    between 0 and 1 (both inclusive).
+    User's input for the 8 dmotions. `weight` should be values between 
+    [min(emo_i), max(emo_i)] for i over all the movies in the dataset.
     """
     emotion: str
     switch: Literal["ignore", "diverse", "specified"]
@@ -65,12 +65,10 @@ class EmoSliderInput:
 @dataclass
 class EmoButtonInput:
     """
-    User's input weight for the 8 dmotions. `weight` should be a ordinal number
-    among 0 1 2(both inclusive).
+    User's input for the 8 dmotions. 
     """
     emotion: str
     weight: Literal["ignore", "diverse", "low", 'high']
-    # corresponds to 0, 0, 0.3, 0.8 ???
     
 
 @dataclass

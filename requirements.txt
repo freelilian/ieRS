@@ -1,0 +1,8 @@
+# see src/ieRSalgs/lenskit11.yml for algorithm requirements
+# server requirements
+flask
+pydantic
+python-dotenv
+
+# testing requirements
+requests
