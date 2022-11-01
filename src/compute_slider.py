@@ -47,9 +47,9 @@ def sqrt_cityblock(point1, point2):
 def emotion_distance(matrix, vector):
     dist_array = []
     for row_vector in matrix:
-        dist = distance.cityblock(row_vector, vector)
+        # dist = distance.cityblock(row_vector, vector)
         # dist = sqrt_cityblock(row_vector, vector)
-        # dist = distance.euclidean(row_vector, vector)
+        dist = distance.euclidean(row_vector, vector)
         dist_array.append(dist)
     
     return  dist_array 
@@ -251,7 +251,7 @@ def predict_tuned_diverseN_by_emotion(ratings: List[Rating], user_id, emotion_in
     
     distance_to_input = emotion_distance(candidate_item_specified_emotions_ndarray, user_specified_emotion_vals)
     distance_to_input_df = pd.DataFrame({'item': candidate_item_ids, 'distance': distance_to_input}, columns = ['item', 'distance'])
-    distance_to_input_df_sorted = distance_to_input_df.sort_values(by = 'distance', ascending = False)
+    distance_to_input_df_sorted = distance_to_input_df.sort_values(by = 'distance', ascending = True)
     # candidates for diversification
     candidates_for_div = distance_to_input_df_sorted
     # ['item', 'distance']
