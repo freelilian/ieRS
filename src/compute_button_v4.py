@@ -51,10 +51,10 @@ def emotion_distance(matrix, vector):
     matrix_min = np.min(matrix, axis = 0)# added
     scaled_vector = (matrix_max - matrix_min)*vector# added
     for row_vector in matrix:
-        # dist = distance.cityblock(row_vector, vector)
-        # dist = sqrt_cityblock(row_vector, vector)
-        dist = distance.euclidean(row_vector, scaled_vector)
-            # change vector - scaled_vector
+        # dist = distance.cityblock(row_vector, scaled_vector)
+        dist = sqrt_cityblock(row_vector, scaled_vector)
+        # dist = distance.euclidean(row_vector, scaled_vector)
+            # change vector -> scaled_vector
         dist_array.append(dist)
     
     return  dist_array 
@@ -67,7 +67,7 @@ def weighted_ranking(original_rec_df, specified_emotion_vals, specified_emotion_
         # ['item', 'imdb_id', 'anger', 'anticipation', 'disgust', 'fear', 'joy', 'sadness', 'surprise', 'trust']
     
     ## create 'ori_rank' to mark the initial ranking
-    original_rec_df.insert(original_rec_df.shape[1], 'ori_rank', range(0, original_rec_df.shape[0]))
+    original_rec_df.insert(original_rec_df.shape[1], 'ori_rank', range(original_rec_df.shape[0], 0, -1))
         # ['item', 'discounted_score', 'ori_rank']
     
     ## merge the initial ranking and emotional signatures
@@ -246,11 +246,11 @@ def predict_tuned_diverseN_by_emotion(ratings: List[Rating], user_id, emotion_in
         # but if the unique() is called with return_counts = True, then the returns will be sorted by the unique elements by default
     # print(item_emotions.head(20))
     # print(item_ids[:20])   
-    numDiv = 100         
-    weighting = 0
-    [TopDiverseEmotion, rec_itemEmotion] = div.diversify_item_feature(candidates, item_emotions_ndarray, item_ids, weighting, numDiv)
+    # numDiv = 100         
+    # weighting = 0
+    # [TopDiverseEmotion, rec_itemEmotion] = div.diversify_item_feature(candidates, item_emotions_ndarray, item_ids, weighting, numDiv)
         # TopDiverseEmotion: ['item', 'discounted_score']
-        # rec_itemEmotion : ['anger', 'anticipation', 'disgust', 'fear', 'joy', 'sadness', 'surprise', 'trust']
+        # rec_itemEmotion : ['anger', 'anticipation', 'disgust', 'fear', 'joy', 'sadness', 'surprise', 'trust']    
 
     #Assume: get the whole 8-dimension vector of the emotion, order:
         #anger, anticipation, disgust, fear, joy, sadness, surprise, trust
@@ -279,16 +279,36 @@ def predict_tuned_diverseN_by_emotion(ratings: List[Rating], user_id, emotion_in
             # user_unspecified_emotion_vals.append(k)     
     # print(user_specified_emotion_tags)
     # print(user_specified_emotion_vals)
-    # print(user_unspecified_emotion_tags)  
+    # print(user_unspecified_emotion_tags) 
+        
+    candidate_ids = candidates.item.unique()
+    candidate_item_emotions = item_emotions[item_emotions['item'].isin(candidate_ids)]
+    # print(candidate_item_emotions.shape)
+        # 200, 10
+    # print('checked shoune 200 items')
+    # print(candidate_item_emotions)
+    candidate_item_unspecified_emotions_ndarray = candidate_item_emotions[user_unspecified_emotion_tags].to_numpy()
+        # np.ndarray of specified columns matches user_unspecified_emotion_tags
+        # for diversification
+    candidate_item_ids = candidate_item_emotions.item.unique()
+    
+    ## -- Diverse by unspecified emotions
+    candidates_for_div = candidates
+    numDiv = 100        
+    weighting = 0
+    ##!!! For Shahan: The diversification algorithm got called here to reorder the top-200 movies
+    [TopDiverseUnspecified, itemEmotionUnspecified] = div.diversify_item_feature(candidates_for_div, candidate_item_unspecified_emotions_ndarray, candidate_item_ids, weighting, numDiv)
+        # diverseEmotion_unspecified: ['item', 'score', 'count', 'rank', 'discounted_score']
+        # itemEmotionUnspecified: [user_unspecified_emotion_tags]    
       
-    candidate_diversedRec_ids = TopDiverseEmotion.item.unique()
+    candidate_diversedRec_ids = TopDiverseUnspecified.item.unique()
     candidate_diversedRec_item_emotions_df = item_emotions[item_emotions['item'].isin(candidate_diversedRec_ids)]
         # ['item', 'imdb_id', 'anger', 'anticipation', 'disgust', 'fear', 'joy', 'sadness', 'surprise', 'trust']
     # print(candidate_diversedRec_item_emotions_df.shape)
         # 50, 10, depends on numDiv
     
     ## Call the weighted_ranking() function
-    new_ranking_diverseEmotion_df = weighted_ranking(TopDiverseEmotion[['item', 'discounted_score']], user_specified_emotion_vals, user_specified_emotion_tags, candidate_diversedRec_item_emotions_df)
+    new_ranking_diverseEmotion_df = weighted_ranking(TopDiverseUnspecified[['item', 'discounted_score']], user_specified_emotion_vals, user_specified_emotion_tags, candidate_diversedRec_item_emotions_df)
     new_ranking_diverseEmotion_df_sorted = new_ranking_diverseEmotion_df.sort_values(by = 'new_rank_score', ascending = False)
 
     numRec = 10

@@ -50,9 +50,9 @@ def emotion_distance(matrix, vector):
     matrix_min = np.min(matrix, axis = 0)# added
     scaled_vector = (matrix_max - matrix_min)*vector# added
     for row_vector in matrix:
-        # dist = distance.cityblock(row_vector, vector)
-        # dist = sqrt_cityblock(row_vector, vector)
-        dist = distance.euclidean(row_vector, scaled_vector)# change vector - scaled_vector
+        # dist = distance.cityblock(row_vector, scaled_vector)
+        dist = sqrt_cityblock(row_vector, scaled_vector)
+        # dist = distance.euclidean(row_vector, scaled_vector)# change vector - scaled_vector
         dist_array.append(dist)
     
     return  dist_array 
